@@ -1,0 +1,15 @@
+.output{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.output__text{
+    font-weight: 200;
+    text-align: end;
+    margin: 0;
+    padding: 0 1rem;
+    font-size: 4rem;
+    width: 100%;
+}

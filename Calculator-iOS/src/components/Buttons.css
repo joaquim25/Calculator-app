@@ -1,0 +1,41 @@
+.keyboard {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+button {
+    border-radius: 35px;
+    height: 70px;
+    width: 70px;
+    border: none;
+    background-color: rgb(65, 65, 65);
+    color: rgb(210, 210, 210);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.active {
+    background-color: white;
+    color: rgb(221, 145, 31);
+}
+
+.prim-op {
+    background-color: rgb(221, 145, 31);
+}
+
+.sec-op {
+    background-color: rgb(147, 147, 147);
+    color: rgb(25, 25, 25);
+}
+
+.null {
+    grid-column: span 2;
+    width: 100%;
+}
