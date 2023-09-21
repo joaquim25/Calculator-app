@@ -5,10 +5,10 @@ import Output from "./components/Output";
 
 // Calculate the result of the given expression
 const calculateResult = (expr) => {
+  // Stacks
   const operators = [];
   const operands = [];
 
-  //Determine the order of operations
   const precedence = {
     "+": 1,
     "-": 1,
@@ -16,15 +16,20 @@ const calculateResult = (expr) => {
     "/": 2,
   };
 
-  // Apply operators to operands according to their precedence
+  // Helper function to check for negative numbers
+  const isNegativeNumber = (char, i) => {
+    if (char === "-" && (i === 0 || (i > 0 && "+-*/(".includes(expr[i - 1])))) {
+      return true;
+    }
+    return false;
+  };
+
+  // Function that applys an operator on the operands.
   const applyOperator = () => {
-    // get hold of the the last operator in the stack
-    // and the last 2 operands in their respective stacks
     const operator = operators.pop();
     const rightOperand = operands.pop();
     const leftOperand = operands.pop();
 
-    //Perform the corresponding operation and push that result back to the operands
     switch (operator) {
       case "+":
         operands.push(leftOperand + rightOperand);
@@ -37,21 +42,21 @@ const calculateResult = (expr) => {
         break;
       case "/":
         if (rightOperand === 0) {
-          alert("You cannot divide by zero");
+          return "Sorry, you cannot divide by zero";
         }
         operands.push(leftOperand / rightOperand);
         break;
     }
   };
 
-  //Iterate through each character of the expression
+  // Loop through each character in the expression ---------
   for (let i = 0; i < expr.length; i++) {
-    const char = expr[i]; //current char
+    const char = expr[i];
 
-    // ------- If char is a digit -------
-    if (char >= "0" && char <= "9") {
-      let numStr = char; //start numStr with the current digit
-      //Check for consecutive digits or decimal point and concatenates it to numStr
+    // Checks if the character is a simple digit or part of a negative number.
+    if ((char >= "0" && char <= "9") || isNegativeNumber(char, i)) {
+      let numStr = char;
+      // If there are more digits or a decimal point, continue building the number string.
       while (
         i + 1 < expr.length &&
         ((expr[i + 1] >= "0" && expr[i + 1] <= "9") || expr[i + 1] === ".")
@@ -59,32 +64,33 @@ const calculateResult = (expr) => {
         numStr += expr[i + 1];
         i++;
       }
-      //when it is done, convert the numStr to a floating number and add it to operands array
+      // Push the number to the operands stack.
       operands.push(parseFloat(numStr));
 
-      // ------- If char is an opening bracket -------
+      // Handle opening parentheses
     } else if (char === "(") {
-      // If the char before the "(" is a number, add an "*" into the operands
+      // If dealing with an implicit multiplication, insert a multiplication operator.
       if (i > 0 && expr[i - 1] >= "0" && expr[i - 1] <= "9") {
         operators.push("*");
       }
-      operators.push(char); //add the char to operators array
+      // Push the "(" to the operators stack.
+      operators.push(char);
 
-      // ------- If char is a closing bracket -------
+      // Handle closing parentheses
     } else if (char === ")") {
-      //if the previous operator is not an openning bracket, apply those operators that sit in between
+      // Applies operators until an opening parenthesis is encountered.
       while (operators.length && operators[operators.length - 1] !== "(") {
         applyOperator();
       }
-      //when there's nothing between the opening bracket and the closing bracket,
-      //remove the opening bracket from the operators array
+
+      // Remove the "(" from the operators stack when found
       if (operators.length && operators[operators.length - 1] === "(") {
-        operators.pop(); // Pop the '('
+        operators.pop();
       }
 
-      // ------- If char is ( + || - || * || / ) -------
-    } else if (["+", "-", "*", "/"].includes(char)) {
-      //compare the operators (precedence) inside operators array and apply them to the operands
+    // Handle operators
+    } else if (char === "+" || "-" || "*" || "/") {
+      // Apply operators with higher precedence
       while (
         operators.length &&
         precedence[char] <= precedence[operators[operators.length - 1]]
@@ -92,20 +98,21 @@ const calculateResult = (expr) => {
         applyOperator();
       }
 
+      // Push the current operator.
       operators.push(char);
     }
   }
 
-  // recursively calls the functions if operators array has value
+  // Apply any remaining operators.
   while (operators.length) {
     applyOperator();
   }
 
-  //When there's only 1 operand left, return the result
-  if (operands.length === 1) {
+  //Return final result or error message
+  if (operands.length === 1 && !isNaN(operands[0])) {
     return operands[0];
   } else {
-    alert("Invalid expression");
+    return " Sorry, invalid expression";
   }
 };
 

@@ -1,21 +1,13 @@
-.output{
-    width: 100%;
-    height: 100%;
+.output {
+    margin: 0 25px;
+    width: 300px;
+    height: 130px;
     display: flex;
     align-items: center;
-    overflow: auto;
+    justify-content: flex-end;
 }
 
-.output::-webkit-scrollbar{
-    display: none;
-
-  }
-
-.output__text{
-    font-weight: 200;
-    text-align: end;
-    margin: 0;
-    padding: 0 1rem;
-    font-size: 4rem;
-    width: 100%;
+#output__text {
+    display: inline-block;
+    white-space: nowrap;
 }

@@ -1,4 +1,6 @@
 .keyboard {
+    position: absolute;
+    bottom: 0;
     padding: 1rem;
     margin-bottom: 1rem;
     display: grid;
