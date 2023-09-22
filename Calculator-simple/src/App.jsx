@@ -118,19 +118,19 @@ const calculateResult = (expr) => {
 
 function App() {
   const [expression, setExpression] = useState("");
-  const [result, setResult] = useState("");
+  const [lastExpression, setLastExpression] = useState("");
 
   // Handle the buttons input
   const handleInput = (inputValue) => {
     switch (inputValue) {
       case "C":
         setExpression("");
-        setResult("");
+        setLastExpression("");
         break;
       case "=":
         const result = calculateResult(expression);
         setExpression(result.toString());
-        setResult(result.toString());
+        setLastExpression(expression);
         break;
       default:
         setExpression((prevExpression) => prevExpression + inputValue);
@@ -140,7 +140,7 @@ function App() {
 
   return (
     <div className="container">
-      <Output result={result} displayValue={expression} />
+      <Output lastExpression={lastExpression} displayValue={expression} />
       <Buttons handleInput={handleInput} />
     </div>
   );

@@ -12,7 +12,7 @@
     white-space: nowrap;
 }
 
-.output__result{
+.output__lastExpression{
     position: absolute;
     left: 25px;
     top: 85px;
