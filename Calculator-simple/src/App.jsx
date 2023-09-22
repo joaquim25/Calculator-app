@@ -88,7 +88,7 @@ const calculateResult = (expr) => {
         operators.pop();
       }
 
-    // Handle operators
+      // Handle operators
     } else if (char === "+" || "-" || "*" || "/") {
       // Apply operators with higher precedence
       while (
@@ -118,16 +118,19 @@ const calculateResult = (expr) => {
 
 function App() {
   const [expression, setExpression] = useState("");
+  const [result, setResult] = useState("");
 
   // Handle the buttons input
   const handleInput = (inputValue) => {
     switch (inputValue) {
       case "C":
         setExpression("");
+        setResult("");
         break;
       case "=":
         const result = calculateResult(expression);
         setExpression(result.toString());
+        setResult(result.toString());
         break;
       default:
         setExpression((prevExpression) => prevExpression + inputValue);
@@ -137,7 +140,7 @@ function App() {
 
   return (
     <div className="container">
-      <Output displayValue={expression} />
+      <Output result={result} displayValue={expression} />
       <Buttons handleInput={handleInput} />
     </div>
   );

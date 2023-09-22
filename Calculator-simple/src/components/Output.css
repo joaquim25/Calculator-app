@@ -11,3 +11,10 @@
     display: inline-block;
     white-space: nowrap;
 }
+
+.output__result{
+    position: absolute;
+    left: 25px;
+    top: 85px;
+    color: rgb(177, 177, 177);
+}
